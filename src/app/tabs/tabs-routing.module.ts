@@ -13,6 +13,11 @@ const routes: Routes = [
           import('../tareas/tareas.module').then((m) => m.TareasPageModule),
       },
       {
+        path: 'autor',
+        loadChildren: () =>
+          import('../autor/autor.module').then((m) => m.AutorPageModule),
+      },
+      {
         path: '',
         redirectTo: '/tabs/tareas',
         pathMatch: 'full',
