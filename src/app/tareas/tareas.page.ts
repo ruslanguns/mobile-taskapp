@@ -77,4 +77,16 @@ export class TareasPage implements OnInit {
     this.selectedTask = undefined;
     this.ngForm.reset();
   }
+
+  archivar() {
+    console.log('tarea archivada');
+  }
+
+  completada() {
+    console.log('tarea completada');
+  }
+
+  nuevoEvento(event) {
+    console.log(event);
+  }
 }

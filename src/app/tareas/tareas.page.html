@@ -60,39 +60,62 @@
 
   <ng-container *ngIf="tasks$ | async as tasks">
     <ion-card button color="tertiary" *ngFor="let task of tasks">
-      <ion-card-header>
-        <ion-card-subtitle>
-          <ion-item color="transparent" fill="full">
-            <ion-text>Task</ion-text>
-            <ion-buttons slot="end" id="alignment-button">
-              <ion-button color="light">
-                <ion-icon
-                  slot="icon-only"
-                  ios="ellipsis-horizontal"
-                  md="ellipsis-vertical"
-                ></ion-icon>
-              </ion-button>
-            </ion-buttons>
+      <ion-item-sliding>
+        <ion-card-header>
+          <ion-card-subtitle>
+            <ion-item color="transparent" fill="full">
+              <ion-text>Task</ion-text>
+              <ion-buttons slot="end" id="alignment-button">
+                <ion-button color="light">
+                  <ion-icon
+                    slot="icon-only"
+                    ios="ellipsis-horizontal"
+                    md="ellipsis-vertical"
+                  ></ion-icon>
+                </ion-button>
+              </ion-buttons>
 
-            <ion-popover trigger="alignment-button" side="top" alignment="end">
-              <ng-template>
-                <ion-content>
-                  <ion-list class="task-options">
-                    <ion-item lines="none" button>Eliminar</ion-item>
-                    <ion-item lines="none" button>Realizada</ion-item>
-                  </ion-list>
-                </ion-content>
-              </ng-template>
-            </ion-popover>
+              <ion-popover
+                trigger="alignment-button"
+                side="top"
+                alignment="end"
+              >
+                <ng-template>
+                  <ion-content>
+                    <ion-list class="task-options">
+                      <ion-item lines="none" button>Archivar</ion-item>
+                      <ion-item lines="none" button>Realizada</ion-item>
+                    </ion-list>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
+            </ion-item>
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-item color="transparent" lines="none">
+            <ion-text> {{ task.description }} </ion-text>
           </ion-item>
-        </ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ion-item color="transparent" lines="none">
-          <ion-text> {{ task.description }} </ion-text>
-        </ion-item>
-      </ion-card-content>
+        </ion-card-content>
+        <ion-item-options class="card-options" side="start">
+          <ion-item-option>Editar</ion-item-option>
+          <ion-item-option (click)="archivar()" color="danger" expandable
+            >Archivar</ion-item-option
+          >
+        </ion-item-options>
+        <ion-item-options class="card-options" side="end">
+          <ion-item-option color="success" (click)="completada()" expandable
+            >Realizada</ion-item-option
+          >
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-card>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="warning">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </ng-container>
 </ion-content>
