@@ -1,0 +1,40 @@
+.center {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.color-danger {
+  color: var(--ion-color-danger);
+}
+
+.description-length {
+  display: block;
+  text-align: right;
+  font-weight: 600;
+}
+
+.task-item {
+  padding: 2em;
+}
+
+h4 {
+  font-size: 1.6em;
+  padding-right: 3rem;
+}
+
+.task-add-subtitle {
+  color: var(--ion-color-dark);
+  text-transform: uppercase;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ion-color-light);
+  padding-bottom: 0.6em;
+  text-transform: uppercase;
+
+  span {
+    display: block;
+  }
+}

@@ -4,15 +4,15 @@
 
 export const environment = {
   firebase: {
-    projectId: 'ionic-final-curso',
-    appId: '1:519315551628:web:10466b6256d793e5d812a9',
-    storageBucket: 'ionic-final-curso.appspot.com',
-    apiKey: 'AIzaSyDMYnClO0rEKPFwuka76pHihcyfj1YzV-U',
-    authDomain: 'ionic-final-curso.firebaseapp.com',
-    messagingSenderId: '519315551628',
-    measurementId: 'G-X0Q64W06MF',
+    apiKey: 'AIzaSyAFTpRMXXK8-GYlmkLvSDajt6yGqAd4GRo',
+    authDomain: 'app-tareas-ea31f.firebaseapp.com',
+    projectId: 'app-tareas-ea31f',
+    storageBucket: 'app-tareas-ea31f.appspot.com',
+    messagingSenderId: '2978500777',
+    appId: '1:2978500777:web:0227fd788a65537dde19b8',
+    measurementId: 'G-1PKZM3V6K7',
   },
-  production: false
+  production: false,
 };
 
 /*
