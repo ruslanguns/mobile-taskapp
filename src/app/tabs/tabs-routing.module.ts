@@ -18,6 +18,11 @@ const routes: Routes = [
           import('../autor/autor.module').then((m) => m.AutorPageModule),
       },
       {
+        path: 'ajustes',
+        loadChildren: () =>
+          import('../ajustes/ajustes.module').then((m) => m.AjustesPageModule),
+      },
+      {
         path: '',
         redirectTo: '/tabs/tareas',
         pathMatch: 'full',
