@@ -13,13 +13,21 @@
   font-weight: 600;
 }
 
-.task-item {
-  padding: 2em;
+small {
+  padding: 0;
+  margin: 0;
 }
 
-h4 {
-  font-size: 1.6em;
-  padding-right: 3rem;
+ion-item {
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.description-length {
+  position: absolute;
+  right: 2em;
+  font-weight: 600;
+  z-index: 1000;
 }
 
 .task-add-subtitle {
@@ -27,14 +35,6 @@ h4 {
   text-transform: uppercase;
 }
 
-.task-header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--ion-color-light);
-  padding-bottom: 0.6em;
-  text-transform: uppercase;
-
-  span {
-    display: block;
-  }
+.task-options {
+  padding: 1em;
 }

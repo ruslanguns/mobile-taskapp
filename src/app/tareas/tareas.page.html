@@ -14,31 +14,29 @@
 
     <ion-card-content>
       <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
-        <span
-          [ngClass]="{'color-danger': descriptionLength >= 501}"
-          class="description-length"
-          >{{ descriptionLength }} / 500</span
-        >
+        <small class="description-length" lines="none" slot="end" color="dark">
+          {{ descriptionLength }} / 500
+        </small>
         <ion-item>
-          <ion-label position="floating">Tarea a realizar....</ion-label>
+          <ion-label position="floating"> Tarea a realizar.... </ion-label>
           <ion-textarea formControlName="description"></ion-textarea>
         </ion-item>
         <div
           *ngIf="description.invalid && (description.dirty || description.touched)"
           class="alert"
         >
-          <span
+          <small
             class="error ion-padding color-danger"
             *ngIf="description.errors?.['required']"
           >
             La descripción es requerida.
-          </span>
-          <span
+          </small>
+          <small
             class="error ion-padding color-danger"
             *ngIf="description.errors?.['maxLength']"
           >
             Has superado el máximo de caracteres
-          </span>
+          </small>
         </div>
 
         <ion-button
@@ -60,35 +58,40 @@
     </ion-card-content>
   </ion-card>
 
-  <ng-container *ngIf="tasks$ | async as tareas">
-    <ion-card class="task-item" color="tertiary" *ngFor="let tarea of tareas">
+  <ng-container *ngIf="tasks$ | async as tasks">
+    <ion-card button color="tertiary" *ngFor="let task of tasks">
       <ion-card-header>
-        <ion-card-subtitle class="task-header">
-          <span>Task </span>
-          <span>{{ tarea.createdAt| date: 'd/M/yy, HH:mm' }}</span>
+        <ion-card-subtitle>
+          <ion-item color="transparent" fill="full">
+            <ion-text>Task</ion-text>
+            <ion-buttons slot="end" id="alignment-button">
+              <ion-button color="light">
+                <ion-icon
+                  slot="icon-only"
+                  ios="ellipsis-horizontal"
+                  md="ellipsis-vertical"
+                ></ion-icon>
+              </ion-button>
+            </ion-buttons>
+
+            <ion-popover trigger="alignment-button" side="top" alignment="end">
+              <ng-template>
+                <ion-content>
+                  <ion-list class="task-options">
+                    <ion-item lines="none" button>Eliminar</ion-item>
+                    <ion-item lines="none" button>Realizada</ion-item>
+                  </ion-list>
+                </ion-content>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
         </ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-text>
-          <h4>{{ tarea.description }}</h4>
-        </ion-text>
-        <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-          <ion-fab-button color="light">
-            <ion-icon name="ellipsis-horizontal-sharp"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-list side="start">
-            <ion-fab-button color="danger" (click)="onDelete(tarea.id)">
-              <ion-icon name="trash-sharp"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button color="dark" (click)="setSelectedTask(tarea)">
-              <ion-icon name="create-sharp"></ion-icon>
-            </ion-fab-button>
-            <ion-fab-button color="success" (click)="onCompletedTask(tarea.id)">
-              <ion-icon name="flash-sharp"></ion-icon>
-            </ion-fab-button>
-          </ion-fab-list>
-        </ion-fab>
+        <ion-item color="transparent" lines="none">
+          <ion-text> {{ task.description }} </ion-text>
+        </ion-item>
       </ion-card-content>
     </ion-card>
   </ng-container>
