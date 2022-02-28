@@ -18,22 +18,10 @@ ion-item {
   --padding-end: 0;
 }
 
-.description-length {
+.task__icon-close {
   position: absolute;
-  right: 2em;
-  font-weight: 600;
+  right: 0.5em;
+  top: -1.4em;
   z-index: 1000;
-}
-
-.task-add-subtitle {
-  color: var(--ion-color-dark);
-  text-transform: uppercase;
-}
-
-.task-options {
-  padding: 1em;
-}
-
-.card-options {
-  z-index: 2;
+  font-size: 2em;
 }

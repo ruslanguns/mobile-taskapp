@@ -1,92 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { Tarea } from '../interfaces/tarea.interface';
 import { TareaService } from '../services/tarea.service';
+import { TareaPage } from './tarea/tarea.page';
 
 @Component({
   selector: 'app-tareas',
   templateUrl: './tareas.page.html',
   styleUrls: ['./tareas.page.scss'],
 })
-export class TareasPage implements OnInit {
-  ngForm: FormGroup;
-  selectedTask: Tarea | undefined = undefined;
+export class TareasPage {
   tasks$ = this.tareaService
     .getAll()
     .pipe(map((tasks) => tasks.filter((x) => !x.completed)));
+  taskModal: HTMLIonModalElement;
 
-  constructor(private fb: FormBuilder, private tareaService: TareaService) {
-    this.ngForm = this.fb.group({
-      description: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(500),
-        ],
-      ],
-    });
-  }
+  constructor(
+    private tareaService: TareaService,
+    public modalController: ModalController
+  ) {}
 
-  get description() {
-    return this.ngForm.get('description');
-  }
-
-  get descriptionLength() {
-    return this.description?.value?.length;
-  }
-
-  ngOnInit() {}
-
-  onSubmit() {
-    if (this.ngForm.valid) {
-      const { description } = this.ngForm.value;
-
-      if (this.selectedTask) {
-        this.tareaService.updateOne(this.selectedTask.id, {
-          description,
-        });
-        this.selectedTask = undefined;
-      } else {
-        this.tareaService.createOne({
-          description,
-          createdAt: new Date().toISOString(),
-        });
-      }
-
-      this.ngForm.reset();
-    }
-  }
-
-  onDelete(id: string) {
+  deleteTask(id: string) {
     console.log(id);
     this.tareaService.deleteOne(id);
   }
 
-  onCompletedTask(id: string) {
+  markAsCompleted(id: string) {
     this.tareaService.updateOne(id, { completed: true });
   }
 
-  setSelectedTask(task: Tarea) {
-    this.selectedTask = task;
-    this.ngForm.setValue({ description: task.description });
+  async presentModal(task?: Tarea) {
+    this.taskModal = await this.modalController.create({
+      component: TareaPage,
+      swipeToClose: true,
+      initialBreakpoint: 0.8,
+      breakpoints: [0, 0.5, 1],
+      componentProps: { task },
+    });
+    return await this.taskModal.present();
   }
 
-  unSelectTask() {
-    this.selectedTask = undefined;
-    this.ngForm.reset();
-  }
-
-  archivar() {
-    console.log('tarea archivada');
-  }
-
-  completada() {
-    console.log('tarea completada');
-  }
-
-  nuevoEvento(event) {
-    console.log(event);
+  closeModal() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
   }
 }

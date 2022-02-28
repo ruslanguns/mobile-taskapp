@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TareasPageRoutingModule } from './tareas-routing.module';
 
 import { TareasPage } from './tareas.page';
+import { TareaPage } from './tarea/tarea.page';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { TareasPage } from './tareas.page';
     TareasPageRoutingModule,
     ReactiveFormsModule,
   ],
-  declarations: [TareasPage],
+  declarations: [TareasPage, TareaPage],
 })
 export class TareasPageModule {}
