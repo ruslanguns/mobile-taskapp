@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
-import { Tarea } from '../interfaces/tarea.interface';
+import { Tarea } from '../shared/interfaces/tarea.interface';
 import { TareaService } from '../services/tarea.service';
 import { TareaPage } from './tarea/tarea.page';
 

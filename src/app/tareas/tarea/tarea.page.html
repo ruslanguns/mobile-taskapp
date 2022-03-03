@@ -6,11 +6,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <ion-icon
-      (click)="closeModal()"
-      class="task__icon-close"
-      name="close"
-    ></ion-icon>
+    <ion-icon (click)="closeModal()" class="task__icon-close" name="close"></ion-icon>
 
     <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
       <small class="description-length" lines="none" slot="end" color="dark">
@@ -20,38 +16,24 @@
         <ion-label position="floating"> Tarea a realizar.... </ion-label>
         <ion-textarea formControlName="description"></ion-textarea>
       </ion-item>
-      <div
-        *ngIf="description.invalid && (description.dirty || description.touched)"
-        class="alert"
-      >
-        <small
-          class="error ion-padding color-danger"
-          *ngIf="description.errors?.['required']"
-        >
+      <ion-button (click)="presentGeoModal()" class="ion-margin-top extra-padding-top-bottom" color="dark"
+        fill="outline" expand="full">
+        🔴 Añadir dirección (opcional)
+      </ion-button>
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
+        <small class="error ion-padding color-danger" *ngIf="description.errors?.['required']">
           La descripción es requerida.
         </small>
-        <small
-          class="error ion-padding color-danger"
-          *ngIf="description.errors?.['maxLength']"
-        >
+        <small class="error ion-padding color-danger" *ngIf="description.errors?.['maxLength']">
           Has superado el máximo de caracteres
         </small>
       </div>
 
-      <ion-button
-        type="submit"
-        class="ion-margin-top extra-padding-top-bottom"
-        expand="full"
-        >{{ !task ? 'Añadir' : 'Modificar'}} tarea</ion-button
-      >
+      <ion-button type="submit" class="ion-margin-top extra-padding-top-bottom" expand="full">
+        {{ !task ? 'Añadir' : 'Modificar'}} tarea</ion-button>
       <ng-container *ngIf="!!task">
-        <ion-button
-          class="ion-margin-top extra-padding-top-bottom"
-          expand="full"
-          color="light"
-          (click)="unSelectTask()"
-          >Regresar</ion-button
-        >
+        <ion-button class="ion-margin-top extra-padding-top-bottom" expand="full" color="light"
+          (click)="unSelectTask()">Regresar</ion-button>
       </ng-container>
     </form>
   </ion-card-content>

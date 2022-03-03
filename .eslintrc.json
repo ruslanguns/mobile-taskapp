@@ -56,7 +56,8 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "@typescript-eslint/naming-convention": "off"
       }
     }
   ]

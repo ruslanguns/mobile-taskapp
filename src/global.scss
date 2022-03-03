@@ -24,3 +24,11 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@import url("https://unpkg.com/leaflet@1.7.1/dist/leaflet.css");
+
+
+#map {
+  height: 500px;
+  max-height: calc(100% - 100px);
+}

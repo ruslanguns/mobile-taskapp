@@ -1,22 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
+import { SharedModule } from '../shared/shared.module';
 import { TareasPageRoutingModule } from './tareas-routing.module';
 
 import { TareasPage } from './tareas.page';
 import { TareaPage } from './tarea/tarea.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TareasPageRoutingModule,
-    ReactiveFormsModule,
-  ],
+  imports: [SharedModule, TareasPageRoutingModule],
   declarations: [TareasPage, TareaPage],
 })
 export class TareasPageModule {}

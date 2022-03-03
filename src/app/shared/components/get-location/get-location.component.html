@@ -1,0 +1,21 @@
+<ion-content>
+  <div class="container">
+    <div id="map"></div>
+    <input #search list="search" [(ngModel)]="searchTerm" placeholder="search something..."
+      (ngModelChange)="onSearchInputChange()" />
+    <datalist id="search">
+      <option *ngFor="let x of searchResults" [value]="x.display_name"></option>
+    </datalist>
+
+    <button (click)="selectAddress()" [disabled]="loading && !foundAddress" class="btn-search">
+      Search
+    </button>
+
+    <button class="btn-getlocation" [disabled]="loading" (click)="this.getGeolocation()">
+      Acceder a la ubicación del dispositivo
+    </button>
+    <button class="btn" [disabled]="loading" (click)="closeModal()">
+      {{ loading ? "loading..." : "Seleccionar y guardar" }}
+    </button>
+  </div>
+</ion-content>

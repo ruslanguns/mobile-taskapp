@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Tarea } from '../interfaces/tarea.interface';
+import { Tarea } from '../shared/interfaces/tarea.interface';
 import { map } from 'rxjs/operators';
 
 @Injectable({

@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { Tarea } from 'src/app/interfaces/tarea.interface';
+import { Tarea } from 'src/app/shared/interfaces/tarea.interface';
 import { TareaService } from 'src/app/services/tarea.service';
+import { GetLocationComponent } from 'src/app/shared/components/get-location/get-location.component';
 
 @Component({
   selector: 'app-tarea',
@@ -12,6 +13,7 @@ import { TareaService } from 'src/app/services/tarea.service';
 export class TareaPage implements OnInit {
   @Input() task: Tarea | undefined = undefined;
 
+  geoModal: HTMLIonModalElement;
   ngForm: FormGroup;
 
   constructor(
@@ -72,7 +74,19 @@ export class TareaPage implements OnInit {
   }
 
   closeModal() {
-    console.log('Cerrando');
     this.modalController.dismiss();
+  }
+
+  async presentGeoModal() {
+    this.geoModal = await this.modalController.create({
+      component: GetLocationComponent,
+      swipeToClose: true,
+      initialBreakpoint: 0.8,
+      breakpoints: [0, 0.5, 0.8],
+    });
+    await this.geoModal.present();
+
+    const { data } = await this.geoModal.onDidDismiss();
+    console.log(JSON.stringify(data, null, 10));
   }
 }
