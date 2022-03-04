@@ -47,8 +47,6 @@ export class TareaPage implements OnInit {
       description: this.task?.description || '',
     });
     this.addressSelected = this.task?.direccion;
-
-    console.log(this.task);
   }
 
   onSubmit() {
@@ -91,11 +89,8 @@ export class TareaPage implements OnInit {
     });
     await this.geoModal.present();
 
-    const {
-      data: {
-        data: { myLonLat = null },
-      },
-    } = await this.geoModal.onDidDismiss();
-    this.addressSelected = myLonLat;
+    const data = await this.geoModal.onDidDismiss();
+
+    this.addressSelected = data?.data?.myLonLat;
   }
 }

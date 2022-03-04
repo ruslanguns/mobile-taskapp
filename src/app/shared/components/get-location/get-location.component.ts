@@ -48,7 +48,7 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
   async closeModal() {
     this.modalController.dismiss({
       data: {
-        myLonLat: this.myLonLat,
+        myLonLat: this.myLonLat || { data: null },
       },
     });
   }
