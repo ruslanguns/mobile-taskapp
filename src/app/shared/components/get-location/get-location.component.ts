@@ -15,7 +15,6 @@ import {
   tap,
 } from 'rxjs/operators';
 import { GeocodingService } from 'src/app/services/geo-coding.service';
-import { IPDataService } from 'src/app/services/ip-data.service';
 import { ClassEnum, ReverseResult, SearchResult } from '../../interfaces';
 import mapLayers from './config/map-layers';
 
@@ -55,26 +54,29 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    // this.map = new Map('map', {
-    //   trackResize: false,
-    //   center: [39.94, -3.85],
-    //   layers: [
-    //     tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    //       attribution:
-    //         'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-    //       maxZoom: 17,
-    //       minZoom: 9,
-    //     }),
-    //   ],
-    // });
-    this.map = new Map('map').setView([39.94, -3.85], 17);
+    this.map = new Map('map', {
+      zoom: 2,
+      center: [39.94, -3.85],
+      layers: [
+        tileLayer(mapLayers[0].url, {
+          maxZoom: 18,
+          attribution: mapLayers[0].attribution,
+        }),
+      ],
+    });
 
-    tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-      attribution:
-        'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-      maxZoom: 17,
-      minZoom: 9,
-    }).addTo(this.map);
+    const baseLayers = mapLayers.reduce(
+      (acc, theme) => ({
+        ...acc,
+        [theme.name]: tileLayer(theme.url, {
+          maxZoom: 18,
+          attribution: theme.attribution,
+        }),
+      }),
+      {}
+    );
+
+    control.layers(baseLayers).addTo(this.map);
 
     this.map.on('click', (e: any) => {
       this.removeMarker();
@@ -140,7 +142,7 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
     this.loading = true;
 
     this.geo.getCurrentPosition(({ coords }) => {
-      this.map.setView([coords.latitude, coords.longitude]);
+      this.map.setView([coords.latitude, coords.longitude], 17);
 
       this.geocodingService
         .getAddress(coords.latitude, coords.longitude)
@@ -171,14 +173,15 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
         .openPopup();
 
       this.myMarker.on('dragend', (e: any) => {
-        const markerData = e.target;
-        const position = markerData.getLatLng();
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const marker = e.target;
+        const position = marker.getLatLng();
 
         this.geocodingService
           .getAddress(position.lat, position.lng)
           .pipe(debounceTime(500))
           .subscribe((result) => {
-            markerData
+            marker
               .setLatLng(new LatLng(position.lat, position.lng), {
                 draggable: true,
               })
