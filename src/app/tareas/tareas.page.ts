@@ -22,7 +22,6 @@ export class TareasPage {
   ) {}
 
   deleteTask(id: string) {
-    console.log(id);
     this.tareaService.deleteOne(id);
   }
 

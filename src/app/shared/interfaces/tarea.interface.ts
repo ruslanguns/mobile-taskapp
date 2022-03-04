@@ -3,4 +3,5 @@ export interface Tarea {
   description: string;
   completed?: boolean;
   createdAt: string;
+  direccion?: Record<string, any>;
 }

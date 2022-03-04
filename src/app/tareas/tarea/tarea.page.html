@@ -18,7 +18,7 @@
       </ion-item>
       <ion-button (click)="presentGeoModal()" class="ion-margin-top extra-padding-top-bottom" color="dark"
         fill="outline" expand="full">
-        🔴 Añadir dirección (opcional)
+        {{ !this.addressSelected ? '🔴 Añadir dirección (opcional)' : '🔵 Dirección seleccionada, ¿cambiar?' }}
       </ion-button>
       <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert">
         <small class="error ion-padding color-danger" *ngIf="description.errors?.['required']">

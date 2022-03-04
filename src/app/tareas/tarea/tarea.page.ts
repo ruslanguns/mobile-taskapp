@@ -15,6 +15,7 @@ export class TareaPage implements OnInit {
 
   geoModal: HTMLIonModalElement;
   ngForm: FormGroup;
+  addressSelected: Record<string, any> = null;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +46,9 @@ export class TareaPage implements OnInit {
     this.ngForm.setValue({
       description: this.task?.description || '',
     });
+    this.addressSelected = this.task?.direccion;
+
+    console.log(this.task);
   }
 
   onSubmit() {
@@ -59,6 +63,7 @@ export class TareaPage implements OnInit {
       } else {
         this.tareaService.createOne({
           description,
+          direccion: this.addressSelected,
           createdAt: new Date().toISOString(),
         });
       }
@@ -86,7 +91,11 @@ export class TareaPage implements OnInit {
     });
     await this.geoModal.present();
 
-    const { data } = await this.geoModal.onDidDismiss();
-    console.log(JSON.stringify(data, null, 10));
+    const {
+      data: {
+        data: { myLonLat = null },
+      },
+    } = await this.geoModal.onDidDismiss();
+    this.addressSelected = myLonLat;
   }
 }

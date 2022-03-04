@@ -24,6 +24,10 @@ export class TareaService {
     );
   }
 
+  getOne(id: string) {
+    return this.collection.doc(id).valueChanges();
+  }
+
   async createOne(tarea: Tarea) {
     return await this.collection
       .add({ ...tarea, completed: false })

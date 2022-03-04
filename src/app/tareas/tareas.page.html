@@ -15,34 +15,16 @@
                 <ion-text>Task</ion-text>
                 <ion-buttons slot="end" id="alignment-button">
                   <ion-button color="light">
-                    <ion-icon
-                      slot="icon-only"
-                      ios="ellipsis-horizontal"
-                      md="ellipsis-vertical"
-                    ></ion-icon>
+                    <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                   </ion-button>
                 </ion-buttons>
 
-                <ion-popover
-                  trigger="alignment-button"
-                  side="top"
-                  alignment="end"
-                >
+                <ion-popover trigger="alignment-button" side="top" alignment="end">
                   <ng-template>
                     <ion-content>
                       <ion-list class="task-options">
-                        <ion-item
-                          (click)="deleteTask(task.id)"
-                          lines="none"
-                          button
-                          >Archivar</ion-item
-                        >
-                        <ion-item
-                          (click)="markAsCompleted(task.id)"
-                          lines="none"
-                          button
-                          >Realizada</ion-item
-                        >
+                        <ion-item (click)="deleteTask(task.id)" lines="none" button>Archivar</ion-item>
+                        <ion-item (click)="markAsCompleted(task.id)" lines="none" button>Realizada</ion-item>
                       </ion-list>
                     </ion-content>
                   </ng-template>
@@ -58,23 +40,13 @@
           </ion-card-content>
 
           <ion-item-options class="card-options" side="start">
-            <ion-item-option (click)="presentModal(task)"
-              >Editar</ion-item-option
-            >
-            <ion-item-option
-              (click)="deleteTask(task.id)"
-              color="danger"
-              expandable
-            >
+            <ion-item-option (click)="presentModal(task)">Editar</ion-item-option>
+            <ion-item-option (click)="deleteTask(task.id)" color="danger" expandable>
               Archivar
             </ion-item-option>
           </ion-item-options>
           <ion-item-options class="card-options" side="end">
-            <ion-item-option
-              (click)="markAsCompleted(task.id)"
-              color="success"
-              expandable
-            >
+            <ion-item-option (click)="markAsCompleted(task.id)" color="success" expandable>
               Realizada
             </ion-item-option>
           </ion-item-options>
