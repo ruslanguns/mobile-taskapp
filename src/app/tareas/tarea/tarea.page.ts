@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Tarea } from 'src/app/shared/interfaces/tarea.interface';
@@ -10,7 +17,7 @@ import { GetLocationComponent } from 'src/app/shared/components/get-location/get
   templateUrl: './tarea.page.html',
   styleUrls: ['./tarea.page.scss'],
 })
-export class TareaPage implements OnInit {
+export class TareaPage implements OnInit, OnDestroy {
   @Input() task: Tarea | undefined = undefined;
 
   geoModal: HTMLIonModalElement;
@@ -49,6 +56,12 @@ export class TareaPage implements OnInit {
     this.addressSelected = this.task?.direccion;
   }
 
+  ngOnDestroy(): void {
+    this.task = undefined;
+    this.addressSelected = null;
+    this.ngForm.reset();
+  }
+
   onSubmit() {
     if (this.ngForm.valid) {
       const { description } = this.ngForm.value;
@@ -56,23 +69,26 @@ export class TareaPage implements OnInit {
       if (this.task) {
         this.tareaService.updateOne(this.task.id, {
           description,
+          direccion: this.addressSelected || null,
         });
         this.task = undefined;
       } else {
         this.tareaService.createOne({
           description,
-          direccion: this.addressSelected,
+          direccion: this.addressSelected || null,
           createdAt: new Date().toISOString(),
         });
       }
 
-      this.ngForm.reset();
+      this.resetForm();
     }
   }
 
   unSelectTask() {
-    this.task = undefined;
-    this.ngForm.reset();
+    this.resetForm();
+  }
+
+  resetForm() {
     this.closeModal();
   }
 
@@ -90,7 +106,6 @@ export class TareaPage implements OnInit {
     await this.geoModal.present();
 
     const data = await this.geoModal.onDidDismiss();
-
-    this.addressSelected = data?.data?.myLonLat;
+    this.addressSelected = data?.data?.data?.myLonLat || null;
   }
 }
