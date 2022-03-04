@@ -17,6 +17,7 @@ import {
 import { GeocodingService } from 'src/app/services/geo-coding.service';
 import { ClassEnum, ReverseResult, SearchResult } from '../../interfaces';
 import mapLayers from './config/map-layers';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-get-location',
@@ -28,7 +29,6 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
 
   map: Map;
   myMarker: Marker;
-  geo: Geolocation = window.navigator.geolocation;
   geocoding: Subscription;
   searchResults: SearchResult[] = [];
   searchTerm: string;
@@ -140,8 +140,8 @@ export class GetLocationComponent implements AfterViewInit, OnDestroy {
 
   getGeolocation() {
     this.loading = true;
-
-    this.geo.getCurrentPosition(({ coords }) => {
+    Geolocation.getCurrentPosition().then(({ coords }) => {
+      console.log('Coordenadas desde Capacitor API:', coords);
       this.map.setView([coords.latitude, coords.longitude], 17);
 
       this.geocodingService
