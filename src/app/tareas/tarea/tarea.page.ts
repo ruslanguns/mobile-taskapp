@@ -100,8 +100,8 @@ export class TareaPage implements OnInit, OnDestroy {
     this.geoModal = await this.modalController.create({
       component: GetLocationComponent,
       swipeToClose: true,
-      initialBreakpoint: 0.8,
-      breakpoints: [0, 0.5, 0.8],
+      initialBreakpoint: 0.6,
+      breakpoints: [0, 0.3, 0.6, 0.8],
     });
     await this.geoModal.present();
 

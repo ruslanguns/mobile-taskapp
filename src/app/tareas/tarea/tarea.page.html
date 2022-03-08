@@ -1,12 +1,12 @@
-<ion-card>
+<ion-card color="transparent">
   <ion-card-header>
-    <ion-card-subtitle class="task-add-subtitle">
+    <ion-card-subtitle class="task-add-subtitle text-white">
       Añadir tarea
     </ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    <ion-icon (click)="closeModal()" class="task__icon-close" name="close"></ion-icon>
+    <ion-icon (click)="closeModal()" class="task__icon-close text-white" name="close"></ion-icon>
 
     <form [formGroup]="ngForm" (ngSubmit)="onSubmit()">
       <small class="description-length" lines="none" slot="end" color="dark">

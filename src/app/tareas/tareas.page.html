@@ -6,20 +6,23 @@
 
 <ion-content>
   <ng-container *ngIf="tasks$ | async as tasks">
-    <ng-container *ngFor="let task of tasks">
-      <ion-card button color="tertiary">
+    <ng-container *ngFor="let task of tasks; let idx = index;">
+      <ion-card button color="light">
         <ion-item-sliding>
           <ion-card-header>
             <ion-card-subtitle>
+
               <ion-item color="transparent" fill="full">
+
                 <ion-text>Task</ion-text>
-                <ion-buttons slot="end" id="alignment-button">
-                  <ion-button color="light">
+
+                <ion-buttons slot="end" [id]="'alignment-button-' + idx">
+                  <ion-button color="dark">
                     <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
                   </ion-button>
                 </ion-buttons>
 
-                <ion-popover trigger="alignment-button" side="top" alignment="end">
+                <ion-popover [trigger]="'alignment-button-' + idx" side="top" alignment="end">
                   <ng-template>
                     <ion-content>
                       <ion-list class="task-options">
@@ -30,7 +33,9 @@
                   </ng-template>
                 </ion-popover>
               </ion-item>
+
             </ion-card-subtitle>
+
           </ion-card-header>
 
           <ion-card-content (click)="presentModal(task)">
