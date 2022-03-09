@@ -1,51 +1,34 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { BehaviorSubject, of, throwError } from 'rxjs';
-import { map, tap, pluck } from 'rxjs/operators';
+import { map, tap, pluck, distinctUntilChanged } from 'rxjs/operators';
 import { IS_LOGIN_TOKEN } from '../constants';
 import { StorageService } from './store.service';
 
 type AuthState = {
-  user: {
-    email: string;
-  };
+  user: { email: string };
   isLogin: boolean;
+};
+
+const initialState: AuthState = {
+  user: null,
+  isLogin: false,
 };
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private subject = new BehaviorSubject<AuthState>({
-    isLogin: false,
-    user: null,
-  });
+  private subject = new BehaviorSubject<AuthState>(null);
+  private store = this.subject.asObservable().pipe(distinctUntilChanged());
 
-  private store$ = this.subject.asObservable().pipe(
-    tap((data) => {
-      console.log('Ha cambiado', data);
-    })
-  );
-
-  constructor(private storeService: StorageService) {
-    // this.store.get<boolean>(IS_LOGIN_TOKEN).then((isLogin) => {
-    //   this.state.next({
-    //     ...this.state.value,
-    //     isLogin: !!isLogin,
-    //   });
-    //   console.log(this.state.value);
-    // });
-    this.subject.next({
-      ...this.subject.value,
-      isLogin: true,
-    });
-  }
+  constructor(private storeService: StorageService) {}
 
   get user() {
-    return this.store$.pipe(pluck('user'));
+    return this.store.pipe(pluck('user'));
   }
 
   get isLogin() {
-    return this.store$.pipe(pluck('isLogin'));
+    return this.store.pipe(pluck('isLogin'));
   }
 
   /**
@@ -83,8 +66,14 @@ export class AuthService {
       user: null,
     });
 
-    console.log(this.subject.value);
-
     this.storeService.set(IS_LOGIN_TOKEN, false);
+  }
+
+  async setup() {
+    const isLogin = await this.storeService.get<boolean>(IS_LOGIN_TOKEN);
+    this.subject.next({
+      ...this.subject.value,
+      isLogin,
+    });
   }
 }
